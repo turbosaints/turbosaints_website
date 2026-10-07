@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Turbosaints — Collegiate Race Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="#home" class="brand nav-anchor"><img src="logo.png" alt="" class="brand-logo"><span class="brand-name">Turbosaints</span></a>
+    <ul class="nav-links">
+      <li><a href="#home"     class="nav-anchor">Home</a></li>
+      <li><a href="#team"     class="nav-anchor">Team</a></li>
+      <li><a href="#our-car"  class="nav-anchor">Our Car</a></li>
+      <li><a href="#sponsors" class="nav-anchor">Sponsors</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════ HOME ═══════════════════════════════════════════ -->
+<div id="home">
+
+<div class="build-pin">
+  <div class="build-sticky">
+    <canvas id="spark-canvas" aria-hidden="true"></canvas>
+    <div class="build-progress-wrap" aria-hidden="true">
+      <div class="build-progress-bar" id="build-bar"></div>
+      <span class="build-progress-label" id="build-label">INITIALISING</span>
+    </div>
+    <div class="build-stage">
+      <svg id="car-svg" viewBox="0 0 960 500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow-red" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-subtle" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <linearGradient id="chassis-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#e2131c"/>
+            <stop offset="60%"  stop-color="#c01018"/>
+            <stop offset="100%" stop-color="#7a0a10"/>
+          </linearGradient>
+          <linearGradient id="floor-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#2a2a2e"/>
+            <stop offset="100%" stop-color="#131316"/>
+          </linearGradient>
+          <linearGradient id="wing-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#e2131c"/>
+            <stop offset="100%" stop-color="#8c0f16"/>
+          </linearGradient>
+          <linearGradient id="tyre-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#1e1e22"/>
+            <stop offset="100%" stop-color="#0b0b0d"/>
+          </linearGradient>
+          <linearGradient id="rim-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#b0b4ba"/>
+            <stop offset="50%"  stop-color="#6b6f75"/>
+            <stop offset="100%" stop-color="#34373d"/>
+          </linearGradient>
+          <radialGradient id="cockpit-glass" cx="50%" cy="35%" r="55%">
+            <stop offset="0%"   stop-color="#2a3a4a" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#0b0f14" stop-opacity="1"/>
+          </radialGradient>
+          <pattern id="carbon" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+            <rect width="8" height="8" fill="#1a1a1e"/>
+            <rect x="0" y="0" width="4" height="4" fill="#222226" opacity="0.7"/>
+            <rect x="4" y="4" width="4" height="4" fill="#222226" opacity="0.7"/>
+          </pattern>
+        </defs>
+        <g id="floor" class="part">
+          <rect x="170" y="372" width="590" height="14" rx="2" fill="url(#floor-grad)"/>
+          <rect x="660" y="358" width="6" height="28" rx="1" fill="#34373d"/>
+          <rect x="672" y="354" width="6" height="32" rx="1" fill="#34373d"/>
+          <rect x="684" y="350" width="6" height="36" rx="1" fill="#34373d"/>
+          <rect x="696" y="347" width="6" height="39" rx="1" fill="#34373d"/>
+          <rect x="708" y="344" width="6" height="42" rx="1" fill="#34373d"/>
+          <rect x="200" y="374" width="4" height="12" rx="1" fill="#2a2a2e"/>
+          <rect x="215" y="374" width="4" height="12" rx="1" fill="#2a2a2e"/>
+          <rect x="230" y="374" width="4" height="12" rx="1" fill="#2a2a2e"/>
+          <rect x="170" y="372" width="590" height="3" rx="1" fill="#e2131c" opacity="0.5"/>
+        </g>
+        <g id="chassis" class="part">
+          <path d="M 200 348 C 230 330, 310 310, 390 306 L 510 306 C 570 306, 640 318, 700 334 L 726 348 L 726 372 L 200 372 Z" fill="url(#chassis-grad)"/>
+          <path d="M 200 348 C 230 330, 310 310, 390 306 L 510 306 C 570 306, 640 318, 700 334 L 726 348 L 726 372 L 200 372 Z" fill="url(#carbon)" opacity="0.18"/>
+          <path d="M 200 348 C 175 348, 148 354, 118 362 L 108 368 L 112 372 L 200 372 Z" fill="#c01018"/>
+          <path d="M 108 368 L 118 362 L 112 368 Z" fill="#8c0f16"/>
+          <path d="M 490 308 C 520 302, 580 304, 620 312 L 630 336 L 610 340 C 580 332, 520 330, 490 336 Z" fill="#b81018" opacity="0.85"/>
+          <line x1="500" y1="310" x2="498" y2="338" stroke="#7a0a10" stroke-width="1.5"/>
+          <line x1="512" y1="308" x2="510" y2="338" stroke="#7a0a10" stroke-width="1.5"/>
+          <line x1="524" y1="307" x2="522" y2="338" stroke="#7a0a10" stroke-width="1.5"/>
+          <path d="M 440 306 C 445 286, 465 278, 485 278 C 505 278, 525 286, 530 306 Z" fill="#b81018"/>
+          <path d="M 560 306 L 574 248 L 580 248 L 594 306 Z" fill="#232529" stroke="#34373d" stroke-width="1"/>
+          <rect x="310" y="340" width="160" height="8" rx="1" fill="#fff" opacity="0.08"/>
+          <rect x="340" y="348" width="60" height="20" rx="2" fill="#0b0b0d" opacity="0.4"/>
+          <rect x="474" y="268" width="10" height="22" rx="3" fill="#e2131c"/>
+          <rect x="471" y="264" width="16" height="6" rx="2" fill="#232529"/>
+          <rect x="200" y="369" width="526" height="3" fill="#5a0a0e" opacity="0.6"/>
+        </g>
+        <g id="susp-rear" class="part">
+          <line x1="700" y1="348" x2="746" y2="360" stroke="#9aa0a6" stroke-width="4" stroke-linecap="round"/>
+          <line x1="700" y1="348" x2="746" y2="345" stroke="#9aa0a6" stroke-width="4" stroke-linecap="round"/>
+          <line x1="700" y1="368" x2="746" y2="378" stroke="#9aa0a6" stroke-width="4" stroke-linecap="round"/>
+          <line x1="700" y1="368" x2="746" y2="358" stroke="#9aa0a6" stroke-width="4" stroke-linecap="round"/>
+          <line x1="710" y1="358" x2="746" y2="385" stroke="#6b6f75" stroke-width="2.5" stroke-linecap="round"/>
+          <rect x="742" y="344" width="10" height="42" rx="3" fill="#9aa0a6"/>
+          <rect x="752" y="354" width="10" height="22" rx="2" fill="#e2131c" opacity="0.9"/>
+          <rect x="740" y="350" width="6" height="30" rx="1" fill="#2a2a2e"/>
+        </g>
+        <g id="susp-front" class="part">
+          <line x1="200" y1="348" x2="160" y2="360" stroke="#9aa0a6" stroke-width="4" stroke-linecap="round"/>
+          <line x1="200" y1="348" x2="160" y2="345" stroke="#9aa0a6" stroke-width="4" stroke-linecap="round"/>
+          <line x1="200" y1="368" x2="160" y2="378" stroke="#9aa0a6" stroke-width="4" stroke-linecap="round"/>
+          <line x1="200" y1="368" x2="160" y2="358" stroke="#9aa0a6" stroke-width="4" stroke-linecap="round"/>
+          <line x1="192" y1="358" x2="158" y2="385" stroke="#6b6f75" stroke-width="2.5" stroke-linecap="round"/>
+          <rect x="150" y="344" width="10" height="42" rx="3" fill="#9aa0a6"/>
+          <rect x="140" y="354" width="10" height="22" rx="2" fill="#e2131c" opacity="0.9"/>
+          <rect x="156" y="350" width="6" height="30" rx="1" fill="#2a2a2e"/>
+        </g>
+        <g id="wheel-rear" class="part">
+          <circle cx="762" cy="376" r="70" fill="url(#tyre-grad)" stroke="#1e1e22" stroke-width="3"/>
+          <circle cx="762" cy="376" r="70" fill="none" stroke="#2a2a2e" stroke-width="8" stroke-dasharray="12 6"/>
+          <circle cx="762" cy="376" r="62" fill="none" stroke="#34373d" stroke-width="4"/>
+          <circle cx="762" cy="376" r="44" fill="url(#rim-grad)"/>
+          <g stroke="#9aa0a6" stroke-width="5" stroke-linecap="round">
+            <line x1="762" y1="376" x2="762" y2="334"/>
+            <line x1="762" y1="376" x2="797" y2="399"/>
+            <line x1="762" y1="376" x2="783" y2="418"/>
+            <line x1="762" y1="376" x2="741" y2="418"/>
+            <line x1="762" y1="376" x2="727" y2="399"/>
+          </g>
+          <circle cx="762" cy="376" r="22" fill="#1a1a1e" stroke="#6b6f75" stroke-width="2"/>
+          <circle cx="762" cy="376" r="10" fill="#e2131c"/>
+          <circle cx="762" cy="376" r="6"  fill="#8c0f16"/>
+          <circle cx="762" cy="376" r="26" fill="#e2131c" opacity="0.08" filter="url(#glow-red)"/>
+        </g>
+        <g id="wheel-front" class="part">
+          <circle cx="164" cy="376" r="62" fill="url(#tyre-grad)" stroke="#1e1e22" stroke-width="3"/>
+          <circle cx="164" cy="376" r="62" fill="none" stroke="#2a2a2e" stroke-width="6" stroke-dasharray="10 5"/>
+          <circle cx="164" cy="376" r="55" fill="none" stroke="#34373d" stroke-width="3"/>
+          <circle cx="164" cy="376" r="38" fill="url(#rim-grad)"/>
+          <g stroke="#9aa0a6" stroke-width="4" stroke-linecap="round">
+            <line x1="164" y1="376" x2="164" y2="340"/>
+            <line x1="164" y1="376" x2="195" y2="397"/>
+            <line x1="164" y1="376" x2="182" y2="413"/>
+            <line x1="164" y1="376" x2="146" y2="413"/>
+            <line x1="164" y1="376" x2="133" y2="397"/>
+          </g>
+          <circle cx="164" cy="376" r="18" fill="#1a1a1e" stroke="#6b6f75" stroke-width="2"/>
+          <circle cx="164" cy="376" r="8"  fill="#e2131c"/>
+          <circle cx="164" cy="376" r="5"  fill="#8c0f16"/>
+          <circle cx="164" cy="376" r="22" fill="#e2131c" opacity="0.08" filter="url(#glow-red)"/>
+        </g>
+        <g id="cockpit" class="part">
+          <path d="M 390 306 C 396 268, 430 244, 468 244 C 504 244, 536 268, 542 306 Z" fill="url(#cockpit-glass)" stroke="#34373d" stroke-width="1.5"/>
+          <path d="M 390 306 C 396 268, 430 244, 468 244 C 504 244, 536 268, 542 306" fill="none" stroke="#e2131c" stroke-width="3"/>
+          <ellipse cx="468" cy="266" rx="26" ry="22" fill="#0b0b0d" stroke="#34373d" stroke-width="1"/>
+          <ellipse cx="468" cy="258" rx="18" ry="10" fill="#1a2a3a" opacity="0.8"/>
+          <path d="M 453 256 Q 468 248 483 256 Q 483 268 468 270 Q 453 268 453 256 Z" fill="#4a8ab4" opacity="0.5"/>
+          <path d="M 402 306 C 402 290, 410 275, 428 266 L 442 262" fill="none" stroke="#9aa0a6" stroke-width="7" stroke-linecap="round"/>
+          <path d="M 534 306 C 534 290, 526 275, 508 266 L 494 262" fill="none" stroke="#9aa0a6" stroke-width="7" stroke-linecap="round"/>
+          <path d="M 442 262 Q 468 252 494 262" fill="none" stroke="#9aa0a6" stroke-width="7" stroke-linecap="round"/>
+          <rect x="464" y="248" width="8" height="26" rx="3" fill="#b0b4ba"/>
+          <path d="M 402 306 L 414 304 L 414 308 Z" fill="#e2131c"/>
+          <path d="M 534 306 L 522 304 L 522 308 Z" fill="#e2131c"/>
+        </g>
+        <g id="front-wing" class="part">
+          <path d="M 60 384 L 242 378 L 242 390 L 60 396 Z" fill="url(#wing-grad)"/>
+          <path d="M 66 376 L 238 370 L 240 378 L 64 384 Z" fill="#c01018"/>
+          <path d="M 72 369 L 234 363 L 238 370 L 70 376 Z" fill="#e2131c" opacity="0.7"/>
+          <path d="M 60 365 L 72 365 L 72 400 L 58 402 Z" fill="#232529" stroke="#34373d" stroke-width="1"/>
+          <path d="M 234 362 L 244 362 L 246 400 L 232 400 Z" fill="#232529" stroke="#34373d" stroke-width="1"/>
+          <path d="M 64 370 C 58 366, 52 368, 50 376 L 56 378 C 56 372, 60 370, 64 374 Z" fill="#e2131c" opacity="0.85"/>
+          <path d="M 234 367 C 242 363, 248 365, 250 373 L 244 375 C 244 369, 240 367, 234 371 Z" fill="#e2131c" opacity="0.85"/>
+          <rect x="154" y="378" width="4" height="16" rx="1" fill="#9aa0a6"/>
+          <path d="M 60 384 L 242 378 L 242 390 L 60 396 Z" fill="url(#carbon)" opacity="0.22"/>
+        </g>
+        <g id="rear-wing" class="part">
+          <path d="M 660 198 L 672 198 L 672 360 L 658 362 Z" fill="#232529" stroke="#34373d" stroke-width="1"/>
+          <path d="M 812 198 L 826 198 L 828 362 L 814 360 Z" fill="#232529" stroke="#34373d" stroke-width="1"/>
+          <path d="M 660 228 L 828 224 L 830 248 L 658 252 Z" fill="url(#wing-grad)"/>
+          <path d="M 662 208 L 826 204 L 828 224 L 660 228 Z" fill="#c01018"/>
+          <path d="M 662 220 L 826 216 L 826 222 L 662 226 Z" fill="#0b0b0d" opacity="0.6"/>
+          <path d="M 680 340 L 812 338 L 812 352 L 680 354 Z" fill="#e2131c" opacity="0.7"/>
+          <path d="M 682 328 L 810 326 L 812 338 L 680 340 Z" fill="#c01018" opacity="0.5"/>
+          <text x="720" y="238" font-family="monospace" font-size="8" fill="#fff" opacity="0.2" letter-spacing="2">DRS</text>
+          <path d="M 660 228 L 828 224 L 830 248 L 658 252 Z" fill="url(#carbon)" opacity="0.25"/>
+        </g>
+        <g id="exhaust" class="part">
+          <ellipse cx="680" cy="296" rx="12" ry="10" fill="#1a1a1e" stroke="#34373d" stroke-width="2"/>
+          <ellipse cx="680" cy="296" rx="8"  ry="6"  fill="#0b0b0d"/>
+          <path d="M 648 288 C 660 282, 680 282, 692 288 L 692 306 C 680 310, 660 310, 648 306 Z" fill="#2a2a2e" stroke="#34373d" stroke-width="1"/>
+          <ellipse cx="680" cy="294" rx="14" ry="10" fill="#ff6600" opacity="0.12" filter="url(#glow-red)"/>
+          <rect x="610" y="296" width="34" height="16" rx="2" fill="#1a1a1e" stroke="#34373d" stroke-width="1"/>
+          <line x1="617" y1="296" x2="617" y2="312" stroke="#34373d" stroke-width="1"/>
+          <line x1="624" y1="296" x2="624" y2="312" stroke="#34373d" stroke-width="1"/>
+          <line x1="631" y1="296" x2="631" y2="312" stroke="#34373d" stroke-width="1"/>
+          <line x1="638" y1="296" x2="638" y2="312" stroke="#34373d" stroke-width="1"/>
+        </g>
+
+        <!-- ground shadow / reflection — always visible, subtle -->
+        <ellipse cx="460" cy="454" rx="320" ry="16"
+          fill="rgba(0,0,0,0)" id="ground-shadow"/>
+        <!-- ground line -->
+        <line x1="90" y1="448" x2="840" y2="448"
+          stroke="#34373d" stroke-width="1" opacity="0.5"/>
+      </svg>
+      <!-- part labels — inside build-stage so % positions align to the SVG -->
+      <div class="part-labels" aria-hidden="true">
+        <span class="part-label" id="lbl-floor">Floor &amp; Diffuser</span>
+        <span class="part-label" id="lbl-chassis">Monocoque Chassis</span>
+        <span class="part-label" id="lbl-susp-rear">Rear Suspension</span>
+        <span class="part-label" id="lbl-susp-front">Front Suspension</span>
+        <span class="part-label" id="lbl-wheel-rear">Rear Tyre</span>
+        <span class="part-label" id="lbl-wheel-front">Front Tyre</span>
+        <span class="part-label" id="lbl-cockpit">Halo + Cockpit</span>
+        <span class="part-label" id="lbl-front-wing">Front Wing</span>
+        <span class="part-label" id="lbl-rear-wing">Rear Wing</span>
+        <span class="part-label" id="lbl-exhaust">Power Unit</span>
+      </div>
+    </div><!-- /.build-stage -->
+    <div class="hero-copy">
+      <p>College Race Club — Est. On the Grid</p>
+      <h1>Built by Saints.<br><em>Driven</em> to win.</h1>
+    </div>
+    <div class="scroll-hint">Scroll to build</div>
+  </div>
+</div><!-- /.build-pin -->
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">About the club</span>
+      <h2>Born to push engineering limits.</h2>
+      <p>Turbosaints unites 40+ passionate minds to bridge the gap between textbook mechanics and track-proven performance. As we step into our second season, our mission remains relentless: engineer world-class vehicles, defy expectations, and prove our capability on the tarmac.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="num">40+</div><div class="label">Engineers</div></div>
+      <div class="stat"><div class="num">1200+</div><div class="label">Hours Worked</div></div>
+      <div class="stat"><div class="num">10</div><div class="label">Departments</div></div>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What we do</span>
+      <h2>Design. Build. Race.</h2>
+    </div>
+    <div class="pillars pillars--3">
+      <div class="pillar"><div class="idx">Design</div><h3>Engineer the car</h3><p>Chassis, aero, and powertrain teams spend fall semester modeling and refining next season's build.</p></div>
+      <div class="pillar"><div class="idx">Build</div><h3>Turn wrenches</h3><p>Winter is shop season — fabrication, wiring, and testing, open to every member regardless of experience.</p></div>
+      <div class="pillar"><div class="idx">Race</div><h3>Show up on race day</h3><p>Spring means the track. We compete regionally as a full team: pit crew, strategy, and driver rotation.</p></div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /#home -->
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════ TEAM ═══════════════════════════════════════════ -->
+<div id="team">
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">The roster</span>
+    <h1>Meet the team</h1>
+  </div>
+</div>
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p>The engineers, fabricators, and strategists behind the build.</p>
+    </div>
+
+    <!-- Leadership -->
+    <div class="team-group-label">Leadership</div>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Monish raghupathi (team captain_brakes and wheel assembly).jpg" alt="Monish Raghupathi" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Team Captain</div>
+          <h3>Monish Raghupathi</h3>
+          <div class="team-dept">Brakes &amp; Wheel Assembly</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Bala Narasimha (Vice Captain_ Chassis & Ergonomics Lead).JPG" alt="Bala Narasimha" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Vice Captain</div>
+          <h3>Bala Narasimha</h3>
+          <div class="team-dept">Chassis &amp; Ergonomics Lead</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Sharleen Elisha (Team Manager)JPG.jpg" alt="Sharleen Elisha" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Team Manager</div>
+          <h3>Sharleen Elisha</h3>
+          <div class="team-dept">Management</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Nishita( treasurer).jpg" alt="Nishita" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Treasurer</div>
+          <h3>Nishita</h3>
+          <div class="team-dept">Finance &amp; Operations</div>
+        </div>
+      </div>
+
+    </div><!-- /.team-grid leadership -->
+
+    <!-- Suspension & Steering -->
+    <div class="team-group-label">Suspension &amp; Steering</div>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Harshith (suspension head).jpg" alt="Harshith" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Suspension &amp; Steering Lead</div>
+          <h3>Harshith</h3>
+          <div class="team-dept">Suspension</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Jayasheel (Suspension & Steering Lead).JPG" alt="Jayasheel" loading="lazy" class="zoom-jayasheel"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Steering</div>
+          <h3>Jayasheel</h3>
+          <div class="team-dept">Suspension</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Abheek(suspension).jpg" alt="Abheek" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Suspension</div>
+          <h3>Abheek</h3>
+          <div class="team-dept">Suspension</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Pranav(suspension).jpg" alt="Pranav" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Suspension</div>
+          <h3>Pranav</h3>
+          <div class="team-dept">Suspension</div>
+        </div>
+      </div>
+
+    </div><!-- /.team-grid suspension -->
+
+    <!-- Chassis & Ergonomics -->
+    <div class="team-group-label">Chassis &amp; Ergonomics</div>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Bala Narasimha (Vice Captain_ Chassis & Ergonomics Lead).JPG" alt="Bala Narasimha" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Chassis &amp; Ergonomics Lead</div>
+          <h3>Bala Narasimha</h3>
+          <div class="team-dept">Chassis &amp; Ergonomics</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Hemanth karthikeya (chassis).jpg" alt="Hemanth Karthikeya" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Chassis &amp; Ergonomics</div>
+          <h3>Hemanth Karthikeya</h3>
+          <div class="team-dept">Chassis &amp; Ergonomics</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Pranav naidu(chassis).jpg" alt="Pranav Naidu" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Chassis &amp; Ergonomics</div>
+          <h3>Pranav Naidu</h3>
+          <div class="team-dept">Chassis &amp; Ergonomics</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Renard Charles (chassis).jpg" alt="Renard Charles" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Chassis &amp; Ergonomics</div>
+          <h3>Renard Charles</h3>
+          <div class="team-dept">Chassis &amp; Ergonomics</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Rohan reddy (chassis).jpg" alt="Rohan Reddy" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Chassis &amp; Ergonomics</div>
+          <h3>Rohan Reddy</h3>
+          <div class="team-dept">Chassis &amp; Ergonomics</div>
+        </div>
+      </div>
+
+    </div><!-- /.team-grid chassis -->
+
+    <!-- Powertrain -->
+    <div class="team-group-label">Powertrain</div>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Rohan sai (powertrain).jpg" alt="Rohan Sai" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Powertrain Lead</div>
+          <h3>Rohan Sai</h3>
+          <div class="team-dept">Powertrain</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Suhruth Kondepudi  ( Powertrain ).JPG" alt="Suhruth Kondepudi" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Powertrain</div>
+          <h3>Suhruth Kondepudi</h3>
+          <div class="team-dept">Powertrain</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Pavan (powertrain).jpg" alt="Pavan" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Powertrain</div>
+          <h3>Pavan</h3>
+          <div class="team-dept">Powertrain</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Venkatesh (suspension ).jpg" alt="Venkatesh" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Powertrain</div>
+          <h3>Venkatesh</h3>
+          <div class="team-dept">Powertrain</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Yashwanth Pavan sai (suspension).jpg" alt="Yashwanth Pavan Sai" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Powertrain</div>
+          <h3>Yashwanth Pavan Sai</h3>
+          <div class="team-dept">Powertrain</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Samardh (steering).jpeg" alt="Samardh" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Powertrain</div>
+          <h3>Samardh</h3>
+          <div class="team-dept">Powertrain</div>
+        </div>
+      </div>
+
+    </div><!-- /.team-grid powertrain -->
+
+    <!-- Electrical -->
+    <div class="team-group-label">Electrical</div>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Manasa(electrical head).jpg" alt="Manasa" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Electrical Head</div>
+          <h3>Manasa</h3>
+          <div class="team-dept">Electrical</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Nanda kishore(electrical).jpg" alt="Nanda Kishore" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Electrical</div>
+          <h3>Nanda Kishore</h3>
+          <div class="team-dept">Electrical</div>
+        </div>
+      </div>
+
+    </div><!-- /.team-grid electrical -->
+
+    <!-- Brakes & Wheel Assembly -->
+    <div class="team-group-label">Brakes &amp; Wheel Assembly</div>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Monish raghupathi (team captain_brakes and wheel assembly).jpg" alt="Monish Raghupathi" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Brakes &amp; Wheel Assembly Lead</div>
+          <h3>Monish Raghupathi</h3>
+          <div class="team-dept">Brakes &amp; Wheel Assembly</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Siddharth(fabrication).jpg" alt="Siddharth" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Brakes &amp; Wheel Assembly</div>
+          <h3>Siddharth</h3>
+          <div class="team-dept">Brakes &amp; Wheel Assembly</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Akshara(suspension).jpg" alt="Akshara" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Brakes &amp; Wheel Assembly</div>
+          <h3>Akshara</h3>
+          <div class="team-dept">Brakes &amp; Wheel Assembly</div>
+        </div>
+      </div>
+
+    </div><!-- /.team-grid brakes -->
+
+    <!-- Social Media & PR -->
+    <div class="team-group-label">Social Media &amp; PR</div>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Sameer Podila ( Social Media & PR Lead).JPG" alt="Sameer Podila" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Social Media &amp; PR Lead</div>
+          <h3>Sameer Podila</h3>
+          <div class="team-dept">Social Media &amp; PR</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Srivanth tyarla(social media and pr).jpg" alt="Srivanth Tyarla" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Social Media &amp; PR</div>
+          <h3>Srivanth Tyarla</h3>
+          <div class="team-dept">Social Media &amp; PR</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Tushar Marthu (social media and pr).jpg" alt="Tushar Marthu" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Social Media &amp; PR</div>
+          <h3>Tushar Marthu</h3>
+          <div class="team-dept">Social Media &amp; PR</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/YENDURU AKANKSHA (social media and pr).jpg" alt="Yenduru Akanksha" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Social Media &amp; PR</div>
+          <h3>Yenduru Akanksha</h3>
+          <div class="team-dept">Social Media &amp; PR</div>
+        </div>
+      </div>
+
+    </div><!-- /.team-grid social -->
+
+    <!-- Logistics -->
+    <div class="team-group-label">Logistics</div>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Dharahas (logistics).jpg" alt="Dharahas" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Logistics Head</div>
+          <h3>Dharahas</h3>
+          <div class="team-dept">Logistics</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo-wrap">
+          <img src="team/Karthik (suspension).jpg" alt="Karthik" loading="lazy"/>
+        </div>
+        <div class="team-info">
+          <div class="team-role">Logistics</div>
+          <h3>Karthik</h3>
+          <div class="team-dept">Logistics</div>
+        </div>
+      </div>
+
+    </div><!-- /.team-grid logistics -->
+
+  </div>
+</section>
+</div><!-- /#team -->
+
+<!-- ════════════════════════════════════════ OUR CAR ════════════════════════════════════════ -->
+<div id="our-car">
+<hr class="divider">
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">TS-02 — Formula Bharat 2027</span>
+    <h1>About the Car</h1>
+  </div>
+</div>
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p>A Formula Student race car is built from specialised subsystems, each engineered to work in harmony. Here's how ours comes together.</p>
+    </div>
+    <div class="car-subsystems">
+
+      <div class="subsystem-card">
+        <div class="subsystem-number">01</div>
+        <div class="subsystem-content">
+          <div class="subsystem-tag">The Foundation</div>
+          <h3>Chassis &amp; Ergonomics</h3>
+          <p>The skeletal frame of the car, designed to keep the driver safe while supporting all other components under extreme racing loads. Ergonomic packaging ensures optimal driver positioning for sustained performance.</p>
+          <ul class="subsystem-specs">
+            <li>Space frame / monocoque construction</li>
+            <li>Driver safety cell</li>
+            <li>Ergonomic cockpit packaging</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsystem-card">
+        <div class="subsystem-number">02</div>
+        <div class="subsystem-content">
+          <div class="subsystem-tag">The Handling</div>
+          <h3>Suspension &amp; Steering</h3>
+          <p>Responsible for keeping the tyres firmly planted on the tarmac. This subsystem dictates how the car turns, grips, and absorbs track forces — the direct link between driver input and road response.</p>
+          <ul class="subsystem-specs">
+            <li>Double wishbone geometry</li>
+            <li>Ackermann steering</li>
+            <li>Roll centre optimisation</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsystem-card">
+        <div class="subsystem-number">03</div>
+        <div class="subsystem-content">
+          <div class="subsystem-tag">The Heartbeat</div>
+          <h3>Powertrain &amp; Drivetrain</h3>
+          <p>Manages the engine, transmission, and power delivery system — converting raw fuel into forward momentum. Every component in this chain is tuned for maximum efficiency and response.</p>
+          <ul class="subsystem-specs">
+            <li>Engine &amp; intake systems</li>
+            <li>Transmission &amp; differential</li>
+            <li>Gear ratio optimisation</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsystem-card">
+        <div class="subsystem-number">04</div>
+        <div class="subsystem-content">
+          <div class="subsystem-tag">The Control</div>
+          <h3>Brakes &amp; Wheel Assembly</h3>
+          <p>Engineers the unsprung mass of the vehicle, focusing on the critical systems that stop the car safely and efficiently. Brake balance, rotor design, and bearing selection directly determine stopping performance.</p>
+          <ul class="subsystem-specs">
+            <li>Front &amp; rear brake circuits</li>
+            <li>Rotor &amp; caliper selection</li>
+            <li>Wheel bearing &amp; hub assembly</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+</div><!-- /#our-car -->
+
+<!-- ══════════════════════════════════════════ SPONSORS ═══════════════════════════════════════ -->
+<div id="sponsors">
+<hr class="divider">
+
+<!-- ── SPONSOR HERO: gear animation + headline ── -->
+<section class="sponsor-hero">
+  <div class="sponsor-hero-left">
+    <canvas id="gear-canvas" aria-hidden="true"></canvas>
+    <div class="gear-label">YOUR MARK<br>AT SPEED</div>
+  </div>
+  <div class="sponsor-hero-right">
+    <span class="eyebrow">Backing the build</span>
+    <h1 class="sponsor-hero-heading">Put your brand<br><span class="accent">on the race<br>line.</span></h1>
+    <p class="sponsor-hero-body">TurboSaints turns workshop ingenuity into visible, trackside impact. Partner with a team that gives every contribution a purpose — on the car, in the paddock, and across the campus.</p>
+    <div class="sponsor-tags">
+      <span class="sponsor-tag">Logo on the Car</span>
+      <span class="sponsor-tag">Trackside Activation</span>
+      <span class="sponsor-tag">Digital Storytelling</span>
+    </div>
+    <a href="mailto:fb.turbosaints@gmail.com" class="btn-deck-submit sponsor-hero-cta">Invest in us</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── WHY SPONSOR ── -->
+<section>
+  <div class="wrap">
+    <div class="section-head"><span class="eyebrow">Partner with us</span><h2>Why sponsor Turbosaints?</h2></div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="idx">01</div>
+        <h3>Priority Talent Acquisition</h3>
+        <p>Bypass the standard hiring funnel. Gain direct, early access to our resume bank of 40+ engineers who already understand systems integration, CAD, and high-pressure project management.</p>
+      </div>
+      <div class="pillar">
+        <div class="idx">02</div>
+        <h3>Targeted Brand Visibility</h3>
+        <p>Your logo on TS-02 guarantees physical exposure to 3,000+ top-tier engineering students, 100+ industry professionals, and corporate judges during the 6-day Formula Bharat event, plus year-round visibility on the VNRVJIET campus of 6,000+ students.</p>
+      </div>
+      <div class="pillar">
+        <div class="idx">03</div>
+        <h3>Digital &amp; Social Reach</h3>
+        <p>Sponsors receive dedicated features and product integration highlights across our platforms. Benefit from a hyper-engaged community with a 60% engagement rate and 20,000+ monthly impressions across LinkedIn and Instagram.</p>
+      </div>
+      <div class="pillar">
+        <div class="idx">04</div>
+        <h3>Product Validation &amp; R&amp;D</h3>
+        <p>Use TS-02 as a high-stress testing ground for your components. We provide technical partners with detailed performance feedback, telemetry data, and real-world validation of their parts under extreme, race-simulated loads.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── MEET OUR SPONSORS ── -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Current partners</span>
+      <h2>Meet our sponsors</h2>
+      <p>The organisations backing TurboSaints for the 2027 season.</p>
+    </div>
+    <div class="sponsors-grid">
+      <div class="sponsor-card sponsor-card--placeholder">
+        <div class="sponsor-logo-wrap sponsor-logo-wrap--placeholder">
+          <span class="sponsor-placeholder-text">Your Logo Here</span>
+        </div>
+        <div class="sponsor-info">
+          <div class="sponsor-tier-badge">Partner</div>
+          <p>Interested in partnering with TurboSaints? Reach out to discuss sponsorship opportunities.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="packages-section">
+  <div class="wrap">
+    <h2 class="packages-heading">Sponsorship Packages</h2>
+    <p style="text-align:center;color:var(--chrome);font-family:var(--font-mono);font-size:0.75rem;letter-spacing:0.12em;margin:-32px 0 48px;">*Packages are customisable</p>
+    <div class="pricing-grid five-tier">
+
+      <!-- TITLE -->
+      <div class="price-card featured">
+        <span class="price-badge">Most Popular</span>
+        <div class="price-tier plat-label">Title Sponsor</div>
+        <div class="price-amount">₹1,00,000+</div>
+        <div class="price-period">Logo Placement: Very Large</div>
+        <div class="price-divider"></div>
+        <ul class="price-list">
+          <li><span class="tick tick-red"></span> Logo on Car</li>
+          <li><span class="tick tick-red"></span> Link &amp; Logo on Website</li>
+          <li><span class="tick tick-red"></span> Social Media Shoutout</li>
+          <li><span class="tick tick-red"></span> Logo on Team Apparel</li>
+          <li><span class="tick tick-red"></span> Logo on Pit Booth Displays</li>
+          <li><span class="tick tick-red"></span> Logo in Every Event</li>
+        </ul>
+        <a href="#sponsor-contact" class="btn-tier btn-tier-red">Become Title Sponsor</a>
+      </div>
+
+      <!-- TECHNICAL -->
+      <div class="price-card gold">
+        <div class="price-tier gold-label">Technical Sponsor</div>
+        <div class="price-amount">Key Part</div>
+        <div class="price-period">Logo Placement: Large</div>
+        <div class="price-divider"></div>
+        <ul class="price-list">
+          <li><span class="tick tick-gold"></span> Logo on Car</li>
+          <li><span class="tick tick-gold"></span> Link &amp; Logo on Website</li>
+          <li><span class="tick tick-gold"></span> Social Media Shoutout</li>
+          <li><span class="tick tick-gold"></span> Logo on Team Apparel</li>
+          <li><span class="tick tick-gold"></span> Logo on Pit Booth Displays</li>
+          <li class="excluded"><span class="tick tick-off"></span> Logo in Every Event</li>
+        </ul>
+        <a href="#sponsor-contact" class="btn-tier btn-tier-outline">Become Technical Sponsor</a>
+      </div>
+
+      <!-- GOLD -->
+      <div class="price-card silver">
+        <div class="price-tier" style="color:#e8c34a;">Gold Sponsor</div>
+        <div class="price-amount">₹50,000–70,000</div>
+        <div class="price-period">Logo Placement: Medium</div>
+        <div class="price-divider"></div>
+        <ul class="price-list">
+          <li><span class="tick tick-red"></span> Logo on Car</li>
+          <li><span class="tick tick-red"></span> Link &amp; Logo on Website</li>
+          <li><span class="tick tick-red"></span> Social Media Shoutout</li>
+          <li><span class="tick tick-red"></span> Logo on Team Apparel</li>
+          <li class="excluded"><span class="tick tick-off"></span> Logo on Pit Booth Displays</li>
+          <li class="excluded"><span class="tick tick-off"></span> Logo in Every Event</li>
+        </ul>
+        <a href="#sponsor-contact" class="btn-tier btn-tier-outline">Become Gold Sponsor</a>
+      </div>
+
+      <!-- SILVER -->
+      <div class="price-card silver">
+        <div class="price-tier silver-label">Silver Sponsor</div>
+        <div class="price-amount">₹30,000–50,000</div>
+        <div class="price-period">Logo Placement: Small</div>
+        <div class="price-divider"></div>
+        <ul class="price-list">
+          <li><span class="tick tick-red"></span> Logo on Car</li>
+          <li><span class="tick tick-red"></span> Link &amp; Logo on Website</li>
+          <li><span class="tick tick-red"></span> Social Media Shoutout</li>
+          <li class="excluded"><span class="tick tick-off"></span> Logo on Team Apparel</li>
+          <li class="excluded"><span class="tick tick-off"></span> Logo on Pit Booth Displays</li>
+          <li class="excluded"><span class="tick tick-off"></span> Logo in Every Event</li>
+        </ul>
+        <a href="#sponsor-contact" class="btn-tier btn-tier-outline">Become Silver Sponsor</a>
+      </div>
+
+      <!-- BRONZE -->
+      <div class="price-card silver">
+        <div class="price-tier" style="color:#cd7f32;">Bronze Sponsor</div>
+        <div class="price-amount">₹5,000–30,000</div>
+        <div class="price-period">Logo Placement: Small</div>
+        <div class="price-divider"></div>
+        <ul class="price-list">
+          <li><span class="tick tick-red"></span> Logo on Car</li>
+          <li><span class="tick tick-red"></span> Link &amp; Logo on Website</li>
+          <li><span class="tick tick-red"></span> Social Media Shoutout</li>
+          <li class="excluded"><span class="tick tick-off"></span> Logo on Team Apparel</li>
+          <li class="excluded"><span class="tick tick-off"></span> Logo on Pit Booth Displays</li>
+          <li class="excluded"><span class="tick tick-off"></span> Logo in Every Event</li>
+        </ul>
+        <a href="#sponsor-contact" class="btn-tier btn-tier-outline">Become Bronze Sponsor</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+<hr class="divider">
+<hr class="divider">
+<section id="sponsor-contact">
+  <div class="wrap sponsor-contact-center">
+    <span class="eyebrow">Get in touch</span>
+    <h2 class="contact-heading">Start the <span class="accent">Conversation</span></h2>
+    <p class="sponsor-contact-intro">Although VNRVJIET provides us with strong institutional and financial backing, manufacturing a championship-tier race car requires robust industry partnerships. Your investment acts as a multiplier — transforming our baseline budget into precision machining, custom electronics, and the extensive track testing required to win.</p>
+
+    <div class="info-list info-list--centered">
+      <div class="info-card">
+        <span class="info-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></span>
+        <div><div class="info-label">Email</div><div class="info-value">fb.turbosaints@gmail.com</div></div>
+      </div>
+      <div class="info-card">
+        <span class="info-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <div><div class="info-label">Team Captain — Monish</div><div class="info-value">+91 79814 42007</div></div>
+      </div>
+      <div class="info-card">
+        <span class="info-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <div><div class="info-label">Treasurer — Nishita</div><div class="info-value">+91 98398 31121</div></div>
+      </div>
+      <div class="info-card">
+        <span class="info-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+        <div><div class="info-label">College</div><div class="info-value">VNRVJIET, Hyderabad</div></div>
+      </div>
+    </div>
+
+    <a href="mailto:fb.turbosaints@gmail.com"
+       class="btn-deck-submit sponsor-cta-btn">
+      Become a Sponsor →
+    </a>
+  </div>
+</section>
+</div><!-- /#sponsors -->
+
+<!-- ═══════════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="wrap footer-grid">
+
+      <!-- Col 1: Contact -->
+      <div class="footer-col">
+        <div class="footer-col-label">Team Captain</div>
+        <div class="footer-name">Monish Raghupathi</div>
+        <a href="tel:+917981442007" class="footer-contact-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +91 79814 42007
+        </a>
+        <a href="mailto:fb.turbosaints@gmail.com" class="footer-contact-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+          fb.turbosaints@gmail.com
+        </a>
+        <div class="footer-col-label" style="margin-top:24px;">Treasurer</div>
+        <div class="footer-name">Nishita</div>
+        <a href="tel:+919839831121" class="footer-contact-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +91 98398 31121
+        </a>
+      </div>
+
+      <!-- Col 2: Follow us -->
+      <div class="footer-col footer-col--center">
+        <div class="footer-col-label">Follow Us</div>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/turbosaints_/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/turbosaints/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@TURBOSAINTS_FB" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="YouTube">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+        <div class="footer-logo-wrap">
+          <a href="#home" class="nav-anchor">
+            <img src="logo.png" alt="Turbosaints" class="footer-logo-img"/>
+          </a>
+          <span class="footer-brand-name">Turbosaints</span>
+        </div>
+      </div>
+
+      <!-- Col 3: Map -->
+      <div class="footer-col">
+        <div class="footer-col-label">Find Us</div>
+        <div class="footer-map-wrap">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3805.2!2d78.3828!3d17.5449!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb8e7a77777777%3A0x1234567890abcdef!2sVNRVJIET!5e0!3m2!1sen!2sin!4v1234567890"
+            width="100%"
+            height="140"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="VNRVJIET location">
+          </iframe>
+        </div>
+        <p class="footer-address">VNRVJIET, Bachupally,<br>Hyderabad, Telangana</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="wrap footer-bottom-inner">
+      <span>© <span id="year"></span> Turbosaints Racing. All rights reserved.</span>
+      <span>VNRVJIET · Formula Bharat 2027</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

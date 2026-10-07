@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Join Us — Turbosaints</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="mark"><span>TS</span></span> Turbosaints</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="team.html">Team</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="sponsors.html">Sponsors</a></li>
+      <li><a href="join.html" class="nav-cta">Join Us</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">No experience needed</span>
+    <h1>Join Turbosaints</h1>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p>Tell us a bit about yourself and what you're interested in. We'll follow up with the next open shop night.</p>
+    </div>
+
+    <form id="join-form" class="form-grid">
+      <div>
+        <label for="name">Full name</label>
+        <input id="name" name="name" type="text" required />
+      </div>
+      <div>
+        <label for="email">College email</label>
+        <input id="email" name="email" type="email" required />
+      </div>
+      <div>
+        <label for="year">Year</label>
+        <select id="year" name="year">
+          <option>First year</option>
+          <option>Second year</option>
+          <option>Third year</option>
+          <option>Fourth year</option>
+          <option>Graduate</option>
+        </select>
+      </div>
+      <div>
+        <label for="interest">Area of interest</label>
+        <select id="interest" name="interest">
+          <option>Design / Engineering</option>
+          <option>Fabrication / Build</option>
+          <option>Electronics / Telemetry</option>
+          <option>Driving</option>
+          <option>Sponsorship / Operations</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+      <div class="full">
+        <label for="message">Anything else we should know?</label>
+        <textarea id="message" name="message" placeholder="Relevant experience, questions, availability..."></textarea>
+      </div>
+      <div class="full">
+        <button type="submit" class="btn btn-solid" style="border:none; cursor:pointer;">Submit application →</button>
+      </div>
+    </form>
+    <p id="form-note" style="display:none; color:var(--chrome); font-family:var(--font-mono); font-size:0.85rem; margin-top:16px;"></p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Other ways to reach us</span>
+      <h2>Find us in person</h2>
+      <p>Engineering Building, Bay 3 · Open shop nights weekly<br>
+      Email: <a href="mailto:turbosaints@college.edu">turbosaints@college.edu</a></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="col">
+      <a href="index.html" class="brand"><span class="mark"><span>TS</span></span> Turbosaints</a>
+      <p>Student motorsport club.</p>
+    </div>
+    <div class="col">
+      <a href="team.html">Team</a>
+      <a href="events.html">Events</a>
+      <a href="sponsors.html">Sponsors</a>
+      <a href="join.html">Join Us</a>
+    </div>
+    <div class="col">
+      <a href="mailto:turbosaints@college.edu">turbosaints@college.edu</a>
+      <p>Engineering Building, Bay 3</p>
+    </div>
+  </div>
+  <div class="wrap fine">© <span id="year"></span> Turbosaints Race Club. Placeholder content — swap in your real copy, logo, and photos.</div>
+</footer>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("join-form").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const note = document.getElementById("form-note");
+  note.style.display = "block";
+  note.textContent = "This form isn't wired to a backend yet — connect it to email or a form service (e.g. Formspree) to start receiving submissions.";
+  this.reset();
+});
+</script>
+<script src="script.js"></script>
+</body>
+</html>
