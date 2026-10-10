@@ -79,7 +79,6 @@ sections.forEach((id) => {
     { id: "susp-front",  from: [-340, 30, -18, 0.5, 1],  range: [0.20, 0.34], ease: easeOutExpo,   label: "lbl-susp-front",  assembleAt: 0.34 },
     { id: "wheel-rear",  from: [380, 60, 360, 0.3, 0.3], range: [0.28, 0.44], ease: easeOutBounce, label: "lbl-wheel-rear",  assembleAt: 0.44 },
     { id: "wheel-front", from: [-380, 60, -360, 0.3, 0.3], range: [0.30, 0.46], ease: easeOutBounce, label: "lbl-wheel-front", assembleAt: 0.46 },
-    { id: "cockpit",     from: [0, -280, 0, 1, 0.5],     range: [0.40, 0.56], ease: easeOutBack,   label: "lbl-cockpit",     assembleAt: 0.56 },
     { id: "front-wing",  from: [-300, 80, -22, 0.4, 1],  range: [0.50, 0.64], ease: easeOutExpo,   label: "lbl-front-wing",  assembleAt: 0.64 },
     { id: "rear-wing",   from: [200, -260, 30, 0.4, 0.4], range: [0.56, 0.72], ease: easeOutBack,  label: "lbl-rear-wing",   assembleAt: 0.72 },
     { id: "exhaust",     from: [0, -160, 0, 0.2, 0.2],   range: [0.64, 0.78], ease: easeOutExpo,   label: "lbl-exhaust",     assembleAt: 0.78 },
