@@ -231,8 +231,11 @@ sections.forEach((id) => {
       });
     }
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-  }
+    // Show the scroll prompt before the build animation begins
+  applyProgress(0);
+  document.documentElement.style.setProperty("--hint-opacity", "1");
+  document.documentElement.style.setProperty("--headline-opacity", "0");
+}
 })();
 
 

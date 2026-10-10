@@ -244,32 +244,40 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
 .scroll-hint {
   position: absolute;
-  bottom: 28px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  bottom: auto;
+  transform: translate(-50%, -50%);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 700;
   letter-spacing: 0.2em;
-  color: var(--chrome-dim);
+  color: var(--off-white);
   text-transform: uppercase;
+  text-align: center;
+  z-index: 20;
   opacity: var(--hint-opacity, 1);
   transition: opacity 0.3s ease;
 }
+
 .scroll-hint::after {
-  content: "";
+  content: "↓";
   display: block;
-  width: 1px;
-  height: 26px;
-  background: var(--chrome-dim);
-  margin: 8px auto 0;
-  animation: hint-drop 1.6s ease-in-out infinite;
+  width: auto;
+  height: auto;
+  background: none;
+  color: var(--red);
+  font-size: 2rem;
+  margin: 10px auto 0;
+  animation: hint-bounce 1.2s ease-in-out infinite;
 }
-@keyframes hint-drop {
-  0% { transform: scaleY(0); opacity: 0; transform-origin: top; }
-  40% { transform: scaleY(1); opacity: 1; transform-origin: top; }
-  100% { transform: scaleY(1); opacity: 0; transform-origin: bottom; }
+
+@keyframes hint-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1892,49 +1900,40 @@ a.brand {
 }
 
 /* Scroll indicator on the opening screen */
+
 .scroll-indicator {
   position: absolute;
-  bottom: 25px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   color: #ffffff;
   cursor: pointer;
-  z-index: 10;
+  z-index: 20;
   animation: scrollBounce 1.6s infinite;
 }
 
 .scroll-text {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
 }
 
 .scroll-arrow {
-  font-size: 30px;
+  font-size: 34px;
   line-height: 1;
   color: #e2131c;
 }
 
 @keyframes scrollBounce {
   0%, 100% {
-    transform: translate(-50%, 0);
+    transform: translate(-50%, -50%);
   }
   50% {
-    transform: translate(-50%, 8px);
-  }
-}
-
-.scroll-indicator:hover {
-  color: #e2131c;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scroll-indicator {
-    animation: none;
+    transform: translate(-50%, calc(-50% + 8px));
   }
 }
