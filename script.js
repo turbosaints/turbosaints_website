@@ -30,7 +30,7 @@ if (navToggle && navLinks) {
 }
 
 // ── active nav link on scroll (IntersectionObserver) ─────────────────────────
-const sections   = ["home", "team", "our-car", "sponsors"];
+const sections   = ["home", "sponsors", "team", "our-car"];
 const navAnchors = {};
 sections.forEach((id) => {
   navAnchors[id] = document.querySelector(`.nav-links a[href="#${id}"]`);
