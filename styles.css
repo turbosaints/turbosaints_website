@@ -1914,12 +1914,8 @@ a.brand {
   cursor: pointer;
   z-index: 20;
   animation: scrollBounce 1.6s infinite;
-  opacity: var(--hint-opacity, 1);
-  transition: opacity 0.3s ease;
 }
-@media (prefers-reduced-motion: reduce) {
-  .scroll-indicator { display: none; }
-}
+
 .scroll-text {
   font-size: 13px;
   font-weight: 700;

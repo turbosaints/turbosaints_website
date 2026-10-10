@@ -30,7 +30,7 @@ if (navToggle && navLinks) {
 }
 
 // ── active nav link on scroll (IntersectionObserver) ─────────────────────────
-const sections   = ["home", "sponsors", "team", "our-car"];
+const sections   = ["home", "team", "our-car", "sponsors"];
 const navAnchors = {};
 sections.forEach((id) => {
   navAnchors[id] = document.querySelector(`.nav-links a[href="#${id}"]`);
@@ -71,7 +71,6 @@ sections.forEach((id) => {
   };
   const clamp01 = (n) => Math.min(1, Math.max(0, n));
   const lerp    = (a, b, t) => a + (b - a) * t;
-  const HINT_END = 0.06; // first 6% of scroll = hint only, no building
 
   const PARTS = [
     { id: "floor",       from: [0, 120, 0, 1, 0.6],      range: [0.00, 0.14], ease: easeOutExpo,   label: "lbl-floor",       assembleAt: 0.14 },
@@ -203,7 +202,8 @@ sections.forEach((id) => {
       }
     }
     document.documentElement.style.setProperty("--headline-opacity", clamp01((progress - 0.80) / 0.14).toFixed(3));
-}
+    document.documentElement.style.setProperty("--hint-opacity", (1 - clamp01(progress / 0.05)).toFixed(3));
+  }
 
   function renderLoop() {
     tickSparks();
@@ -219,49 +219,25 @@ sections.forEach((id) => {
       if (partEls[id]) partEls[id].style.opacity = "1";
       labelEls[id]?.classList.add("show");
     });
-     } else {
+  } else {
     let ticking = false;
-    const hintEl = document.querySelector(".scroll-indicator");
-
-    function getRawProgress() {
-      const rect  = pin.getBoundingClientRect();
-      const total = pin.offsetHeight - window.innerHeight;
-      return clamp01(-rect.top / Math.max(1, total));
-    }
-
-    function update() {
-      const raw = getRawProgress();
-
-      // Phase 1: hint fades out
-      const hintOpacity = 1 - clamp01(raw / HINT_END);
-      document.documentElement.style.setProperty("--hint-opacity", hintOpacity.toFixed(3));
-      if (hintEl) hintEl.style.pointerEvents = hintOpacity > 0.05 ? "auto" : "none";
-
-      // Phase 2: build starts only after the hint is gone
-      applyProgress(clamp01((raw - HINT_END) / (1 - HINT_END)));
-    }
-
     function onScroll() {
       if (ticking) return; ticking = true;
       requestAnimationFrame(() => {
-        update();
+        const rect  = pin.getBoundingClientRect();
+        const total = pin.offsetHeight - window.innerHeight;
+        applyProgress(clamp01(-rect.top / Math.max(1, total)));
         needsDraw = true; scheduleRender(); ticking = false;
       });
     }
     window.addEventListener("scroll", onScroll, { passive: true });
-
-    // Clicking the hint scrolls just past it so the build kicks off
-    if (hintEl) {
-      hintEl.addEventListener("click", () => {
-        const total  = pin.offsetHeight - window.innerHeight;
-        const pinTop = pin.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({ top: pinTop + total * (HINT_END + 0.04), behavior: "smooth" });
-      });
-    }
-
-    update(); // correct state on load, and on refresh mid-page
-  }
+    // Show the scroll prompt before the build animation begins
+  applyProgress(0);
+  document.documentElement.style.setProperty("--hint-opacity", "1");
+  document.documentElement.style.setProperty("--headline-opacity", "0");
+}
 })();
+
 
 // =============================================================================
 //  GEAR CANVAS ANIMATION — sponsor hero
