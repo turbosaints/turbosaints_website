@@ -226,6 +226,7 @@ img { max-width: 100%; display: block; }
   position: relative;
   text-align: center;
   margin-top: 34px;
+  padding-bottom: 70px;
   opacity: var(--headline-opacity, 0);
   transition: opacity 0.4s ease;
 }
@@ -1193,10 +1194,10 @@ footer {
 
 /* ── progress bar ── */
 .build-progress-wrap {
-  position: relative;
-  order: 10;
-  margin-top: 24px;
-  align-self: center;
+  position: absolute;
+  bottom: 56px;
+  left: 50%;
+  transform: translateX(-50%);
   width: min(360px, 72vw);
   display: flex;
   flex-direction: column;
@@ -1364,7 +1365,7 @@ footer {
 @media (max-width: 700px) {
   .build-pin { height: 300vh; }
   .part-label { display: none; }
-  .build-progress-wrap { width: 80vw; }
+  .build-progress-wrap { bottom: 44px; width: 80vw; }
 }
 
 /* single-page scroll — section offset so sticky nav doesn't cover headings */
@@ -1927,8 +1928,6 @@ a.brand {
   cursor: pointer;
   z-index: 20;
   animation: scrollBounce 1.6s infinite;
-  opacity: var(--hint-opacity, 1);
-  transition: opacity 0.3s ease;
 }
 
 .scroll-text {
