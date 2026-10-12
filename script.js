@@ -230,7 +230,13 @@ sections.forEach((id) => {
         needsDraw = true; scheduleRender(); ticking = false;
       });
     }
-    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", () => {
+  onScroll();
+  if (canvas && ctx) {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+});
     // Show the scroll prompt before the build animation begins
   applyProgress(0);
   document.documentElement.style.setProperty("--hint-opacity", "1");
@@ -248,13 +254,21 @@ sections.forEach((id) => {
   const ctx = canvas.getContext("2d");
   let angle = 0;
   let raf;
-
-  function resize() {
-    canvas.width  = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+  
+function resize() {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width > 0 && rect.height > 0) {
+      canvas.width  = rect.width;
+      canvas.height = rect.height;
+    }
   }
   resize();
-  window.addEventListener("resize", resize);
+
+  if (window.ResizeObserver) {
+    new ResizeObserver(() => resize()).observe(canvas);
+  } else {
+    window.addEventListener("resize", resize);
+  }
 
   function drawGear(cx, cy, outerR, innerR, toothCount, rotation, alpha, glowR, glowG, glowB) {
     const step = (Math.PI * 2) / toothCount;

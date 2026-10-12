@@ -187,6 +187,7 @@ img { max-width: 100%; display: block; }
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100dvh; /* Adapts dynamically to browser chrome / sidebars */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1507,16 +1508,19 @@ a.brand {
 
 /* 5-tier pricing grid */
 .packages-section .pricing-grid.five-tier {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   gap: 16px;
-  align-items: start;
+  align-items: stretch;
 }
-@media (max-width: 1100px) {
+
+@media (max-width: 1200px) {
   .packages-section .pricing-grid.five-tier {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   }
 }
-@media (max-width: 700px) {
+
+@media (max-width: 600px) {
   .packages-section .pricing-grid.five-tier {
     grid-template-columns: 1fr;
   }
@@ -1661,12 +1665,21 @@ a.brand {
 /* ==========================================================================
    OUR CAR — subsystem cards
    ========================================================================== */
+/* Replace .car-subsystems and subsystem card sizing */
 .car-subsystems {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: 12px;
   border: 1px solid var(--steel-line);
   margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+  .subsystem-card {
+    flex-direction: column;
+    gap: 14px;
+    padding: 24px 18px;
+  }
 }
 
 .subsystem-card {
@@ -1935,5 +1948,39 @@ a.brand {
   }
   50% {
     transform: translate(-50%, calc(-50% + 8px));
+  }
+}
+/* ==========================================================================
+   CROSS-BROWSER REACTIVE FIXES (Chrome / Opera GX / Mobile)
+   ========================================================================== */
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: clip; /* Prevents unwanted horizontal scrollbars from sidebars */
+}
+
+/* Ensure SVG scales smoothly inside any flex or grid container */
+#car-svg {
+  width: 100%;
+  height: auto;
+  max-height: 55vh;
+  display: block;
+}
+
+/* Maintain container padding integrity across narrower windows */
+@media (max-width: 480px) {
+  .wrap {
+    padding: 0 16px;
+  }
+  .site-nav .wrap {
+    height: 64px;
+  }
+  .nav-links {
+    top: 64px;
+  }
+  .contact-heading,
+  .hero-copy h1,
+  .sponsor-hero-heading {
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
   }
 }
