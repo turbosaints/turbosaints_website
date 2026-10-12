@@ -229,7 +229,11 @@ sections.forEach((id) => {
         applyProgress(clamp01(-rect.top / Math.max(1, total)));
         needsDraw = true; scheduleRender(); ticking = false;
       });
-    }
+   }
+
+    // Add the missing scroll listener back
+    window.addEventListener("scroll", onScroll, { passive: true });
+    
     window.addEventListener("resize", () => {
   onScroll();
   if (canvas && ctx) {

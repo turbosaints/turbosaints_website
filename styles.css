@@ -1956,7 +1956,7 @@ a.brand {
 html, body {
   width: 100%;
   max-width: 100vw;
-  overflow-x: clip; /* Prevents unwanted horizontal scrollbars from sidebars */
+  /* overflow-x removed to allow position: sticky to function correctly */
 }
 
 /* Ensure SVG scales smoothly inside any flex or grid container */
